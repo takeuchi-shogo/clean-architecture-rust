@@ -1,0 +1,15 @@
+
+# 「docker-compose -f .docker/docker-compose.yml build」フォルダを指定して
+# カレントディレクトリから実行できる
+version: '3'
+
+services:
+  clean-archtecture-rust:
+    build: 
+      context: ../
+      dockerfile: .docker/rust/Dockerfile
+    container_name: rust_api
+    ports:
+      - 80:80
+    volumes:
+      - ../app:/var/www/html
