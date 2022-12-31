@@ -1,6 +1,8 @@
 
 FROM mysql:8.0.31
 
+EXPOSE 3306
+
 # 起動時に実行してくれるディレクトリ
 COPY ./mysql/sql/01_init_db.sql /docker-entrypoint-initdb.d/01_init_db.sql
 

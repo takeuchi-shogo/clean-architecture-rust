@@ -10,6 +10,23 @@ services:
       dockerfile: .docker/rust/Dockerfile
     # container_name: rust_api
     ports:
-      - 8000:8000
+      - 80:8000
+    # depends_on:
+    #   - database
     volumes:
       - ../app:/clean-archtecture-rust
+
+# http://localhost/api/xxxxx -> アクセス確認
+
+  # database:
+  #   build:
+  #     context: ../
+  #     dockerfile: .docker/mysql/Dockerfile
+  #   # 仔細は省略しますが、alwaysを選択すると
+  #   # dockerデーモンとOSホストの再起動時にコンテナも再起動してくれるらしい
+  #   restart: always
+  #   # volumes:
+  #     # - ../mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: pass
+  #     TZ: 'Asia/Tokyo'
