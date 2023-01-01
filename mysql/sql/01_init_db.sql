@@ -1,1 +1,1 @@
-CREATE DATABASE clean_archtecture_rust;
+CREATE DATABASE clean_architecture_rust;

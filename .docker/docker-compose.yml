@@ -1,7 +1,7 @@
 
 version: '3'
 
-name: clean-archtecture-rust
+name: clean-architecture-rust
 
 services:
   application:
@@ -14,16 +14,16 @@ services:
     depends_on:
       - database
     volumes:
-      - ../app:/clean-archtecture-rust
+      - ../app:/clean-architecture-rust
     networks:
-      - clean-archtecture-rust-network
+      - clean-architecture-rust-network
 # http://localhost/api/xxxxx -> アクセス確認
 
   database:
     build:
       context: ../
       dockerfile: .docker/mysql/Dockerfile
-    # platform: linux/x86_64
+    platform: linux/x86_64
     # 仔細は省略しますが、alwaysを選択すると
     # dockerデーモンとOSホストの再起動時にコンテナも再起動してくれるらしい
     restart: always
@@ -36,7 +36,7 @@ services:
   phpmyadmin:
     image: phpmyadmin:5
     restart: always
-    container_name: clean-archtecture-rust_phpmyadmin
+    container_name: clean-architecture-rust_phpmyadmin
     ports:
         - 8181:8000
     environment:
@@ -49,5 +49,5 @@ services:
     #     - 
 
 networks:
-  clean-archtecture-rust-network:
-    name: clean-archtecture-rust-network
+  clean-architecture-rust-network:
+    name: clean-architecture-rust-network

@@ -1,5 +1,5 @@
 [package]
-name = "clean-archtecture-rust"
+name = "clean-architecture-rust"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 chrono = "0.4.23"
-# diesel = { version = "2.0.2", features = ["mysql"] }
+diesel = { version = "2.0.2", features = ["mysql"] }
 rocket = "0.4.11"
 # rocket_contrib = "0.4.11"
 serde = { version = "1.0", features = ["derive"] }
@@ -17,3 +17,6 @@ serde_json = { version = "1.0.91", default-features = false, features = ["alloc"
 version = "0.4.10"
 default-features = false
 features = ["json"]
+
+[patch.crates-io]
+mysqlclient-sys = { git = "https://github.com/pzmarzly/mysqlclient-sys", rev = "acd1b2b" }
