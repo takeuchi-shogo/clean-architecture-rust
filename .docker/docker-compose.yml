@@ -10,6 +10,44 @@ services:
       dockerfile: .docker/rust/Dockerfile
     # container_name: rust_api
     ports:
-      - 8000:8000
+      - 8180:8000
+    depends_on:
+      - database
     volumes:
       - ../app:/clean-archtecture-rust
+    networks:
+      - clean-archtecture-rust-network
+# http://localhost/api/xxxxx -> アクセス確認
+
+  database:
+    build:
+      context: ../
+      dockerfile: .docker/mysql/Dockerfile
+    # platform: linux/x86_64
+    # 仔細は省略しますが、alwaysを選択すると
+    # dockerデーモンとOSホストの再起動時にコンテナも再起動してくれるらしい
+    restart: always
+    env_file:
+      - ../mysql/config/.env
+    volumes:
+      - ../mysql/data:/var/lib/mysql
+      - ../mysql/sql:/sql
+  
+  phpmyadmin:
+    image: phpmyadmin:5
+    restart: always
+    container_name: clean-archtecture-rust_phpmyadmin
+    ports:
+        - 8181:8000
+    environment:
+        # - PMA_ARBITRARY=1
+        - PMA_HOST=mysql
+        - PMA_USER=root
+        - PMA_PASSWORD=pass
+        # - VIRTUAL_HOST=
+    # networks:
+    #     - 
+
+networks:
+  clean-archtecture-rust-network:
+    name: clean-archtecture-rust-network

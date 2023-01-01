@@ -1,0 +1,1 @@
+CREATE DATABASE clean_archtecture_rust;
