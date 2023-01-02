@@ -1,7 +1,7 @@
 
 version: '3'
 
-name: clean-archtecture-rust
+name: clean-architecture-rust
 
 services:
   application:
@@ -13,41 +13,52 @@ services:
       - 8180:8000
     depends_on:
       - database
+      - phpmyadmin
     volumes:
-      - ../app:/clean-archtecture-rust
+      - ../app:/clean-architecture-rust
     networks:
-      - clean-archtecture-rust-network
+      - clean-architecture-rust-network
 # http://localhost/api/xxxxx -> アクセス確認
 
   database:
     build:
       context: ../
       dockerfile: .docker/mysql/Dockerfile
+    container_name: database
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
     # platform: linux/x86_64
     # 仔細は省略しますが、alwaysを選択すると
     # dockerデーモンとOSホストの再起動時にコンテナも再起動してくれるらしい
     restart: always
     env_file:
       - ../mysql/config/.env
+    # コンテナ外からの接続権限を与える
+    environment:
+      - MYSQL_ROOT_HOST=%
     volumes:
       - ../mysql/data:/var/lib/mysql
       - ../mysql/sql:/sql
+    networks:
+        - clean-architecture-rust-network
   
   phpmyadmin:
     image: phpmyadmin:5
     restart: always
-    container_name: clean-archtecture-rust_phpmyadmin
+    container_name: clean-architecture-rust_phpmyadmin
     ports:
         - 8181:8000
     environment:
-        # - PMA_ARBITRARY=1
+        - PMA_ARBITRARY=1
         - PMA_HOST=mysql
         - PMA_USER=root
-        - PMA_PASSWORD=pass
+        - PMA_PASSWORD=password
         # - VIRTUAL_HOST=
-    # networks:
-    #     - 
+    networks:
+        - clean-architecture-rust-network
 
 networks:
-  clean-archtecture-rust-network:
-    name: clean-archtecture-rust-network
+  clean-architecture-rust-network:
+    name: clean_architecture_rust_network
